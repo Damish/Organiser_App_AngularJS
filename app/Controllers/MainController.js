@@ -30,12 +30,13 @@ app.controller('MainController', ['$scope', $scope => {
     $scope.showMe = false;
     $scope.myFunc = function() {
         $scope.showMe = !$scope.showMe;
-    }
+    };
 
     $scope.showMe2 = false;
     $scope.showTable = function() {
         $scope.showMe2 = !$scope.showMe2;
-    }
+    };
+
 
     $scope.removeItem = () => {
         let oldList = $scope.list;
@@ -43,7 +44,8 @@ app.controller('MainController', ['$scope', $scope => {
         angular.forEach(oldList, (checked) => {
             if (!checked.done) $scope.list.push(checked);
         });
-    }
+    };
+
 }]);
 
 
