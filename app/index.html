@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Online Organizer</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+
+<body ng-app="ToDoList" ng-controller="MainController">
+
+<div class="text-center "><h1 class="mt-5 mb-5">Online Organizer</h1></div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+
+            <!-- Space to implement calender -->
+
+        </div>
+        <div class="col-md-4">
+
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-danger m-2" ng-click="myFunc()">New Event</button>
+            </div>
+
+            <div ng-show="showMe">
+
+                <input type="text" id="eName" class="form-control form-control-lg mb-3" ng-model="eventName"
+                       placeholder="Remind me about . ." value=" " required>
+                <input type="date" id="eDate" class="form-control form-control-lg mb-3" ng-model="eventDate" value=" "
+                       required>
+                <input type="time" id="eTime" class="form-control form-control-lg mb-3" ng-model="eventTime" value=" "
+                       required>
+                <input type="text" id="eVenue" class="form-control form-control-lg mb-3" ng-model="eventVenue"
+                       placeholder="Venue" value=" " required>
+
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-success" ng-click="addItem()" onclick="myFunction()">Add
+                        event
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 justify-content-center" ng-show="showMe">
+
+
+        <div class="col-md-11 alert alert-info">
+
+            <h5 style="font-size: large" class="alert-heading">Your Reminder in words . .</h5>
+            <hr>
+
+            <span style="font-size: x-large">Remind me about&nbsp; </span>
+            <span style="font-size: x-large" ng-bind="eventName"></span>
+            <span style="font-size: x-large"> &nbsp;on&nbsp; </span>
+            <span style="font-size: x-large" ng-bind="eventDate.toLocaleDateString()"></span>
+            <span style="font-size: x-large"> &nbsp;at&nbsp; </span>
+            <span style="font-size: x-large" ng-bind="eventTime.toLocaleTimeString()"></span>
+            <span style="font-size: x-large"> &nbsp;at&nbsp; </span>
+            <span style="font-size: x-large" ng-bind="eventVenue"></span>
+            <span style="font-size: x-large">.</span>
+
+        </div>
+
+
+    </div>
+</div>
+
+<div class="row mt-5 justify-content-center">
+
+    <div class="col-md-10">
+
+        <div class="col-md-11 d-flex justify-content-end">
+            <button class="btn btn-primary m-2" ng-click="showTable()">Show/Hide All Events</button>
+        </div>
+
+        <div ng-show="showMe2">
+            <table class="table table-hover table-borderless">
+                <tr class="text-center">
+                    <th>Id</th>
+                    <th>Event</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Venue</th>
+                </tr>
+                <tr ng-repeat="x in list" style="margin-left: 40px" class="text-center">
+
+                    <td ng-bind="x.id"></td>
+                    <td ng-bind="x.eName"></td>
+                    <td ng-bind="x.eDate"></td>
+                    <td ng-bind="x.eTime"></td>
+                    <td class="mb-5" ng-bind="x.eVenue"></td>
+
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+
+</div>
+</div>
+
+
+</div>
+
+<script src="lib/angular/angular.js"></script>
+<script src="lib/angular-route/angular-route.js"></script>
+<!--Following codes is used to import the app and controller-->
+<script src="app.js"></script>
+<script src="controllers/MainController.js"></script>
+<!---->
+<script src="core/version/version.js"></script>
+<script src="core/version/version-directive.js"></script>
+<script src="core/version/interpolate-filter.js"></script>
+</body>
+</html>
