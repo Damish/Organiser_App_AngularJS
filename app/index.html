@@ -1,6 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <style>
+
+        #calendar {
+            margin: 0 auto;
+            width: 1120px;
+            background-color: #FFFFFF;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px #C3C3C3;
+            -webkit-box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.18);
+            -moz-box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.18);
+            box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.18);
+        }
+
+        #wrap {
+            width: 1100px;
+            margin: 0 auto;
+        }
+        #dayIcon1{
+            width: 140px;
+            height: 90px;
+
+        }
+        #dayIcon2{
+            width: 140px;
+            height: 90px;
+
+        }
+        #dayIcon3{
+            width: 140px;
+            height: 90px;
+
+        }
+
+
+    </style>
+
+
     <meta charset="utf-8">
     <title>Online Organizer</title>
     <!-- Latest compiled and minified CSS -->
@@ -25,44 +63,10 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-8">
 
-            <!-- Space to implement calender -->
+        <div class="col-md-8"></div>
 
-            <div class="row">
-                <div class="bg-warning col m-2 text-center" ng-repeat="x in days">
-                    <div ng-bind="x"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="bg-light col m-2 text-center" ng-repeat="x in week1">
-                    <div ng-bind="x"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="bg-light col m-2 text-center" ng-repeat="x in week2">
-                    <div ng-bind="x"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="bg-light col m-2 text-center" ng-repeat="x in week3">
-                    <div ng-bind="x"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="bg-light col m-2 text-center" ng-repeat="x in week4">
-                    <div ng-bind="x"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="bg-light col m-2 text-center" ng-repeat="x in week54">
-                    <div ng-bind="x"></div>
-                </div>
-            </div>
 
-            <!-- Space to implement calender -->
-
-        </div>
         <div class="col-md-4">
 
             <div class="d-flex justify-content-end">
@@ -89,6 +93,68 @@
             </div>
         </div>
     </div>
+</div>
+
+
+<br/>
+
+
+
+
+    <div id='wrap'>
+
+        <div id='calendar'>
+
+            <div class="row">
+                <div class="col text-center">
+                    <h3>April</h3>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+
+                <div id="dayIcon1" class="mt-2 mb-2 ml-1 mr-1" ng-repeat="x in days">
+                    <div class="bg-warning col mt-4 mb-3 ml-5 mr-5 p-2 text-center" ng-bind="x"></div>
+                </div>
+
+            </div>
+            <div class="row">
+
+
+                <div id="dayIcon3" class="mt-2 mb-2 ml-1 mr-1" ng-repeat="x in monthCorrecter">
+                    <div class="col bg-light mt-2 mb-3 ml-5 mr-5 p-3 text-center" >
+                        <span ng-bind="x"></span>
+                    </div>
+                </div>
+
+                <div id="dayIcon2" class="mt-2 mb-2 ml-1 mr-1" ng-repeat="x in fullMonth">
+                    <div class="col bg-light mt-2 mb-3 ml-5 mr-5 p-3 text-center" >
+                        <span ng-bind="x"></span>
+                    </div>
+                </div>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <div class="row mt-5 justify-content-center" ng-show="showMe">
 
@@ -145,6 +211,10 @@
         </div>
     </div>
 </div>
+
+
+
+
 
 
 <script src="lib/angular/angular.js"></script>
