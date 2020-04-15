@@ -1,17 +1,35 @@
 app.controller('MainController', ['$scope', $scope => {
 
+    // $scope.months= ["jan","feb","march"];
+    // $scope.current=0;
+    //
+    //
+    //
+    //
+    // $scope.currentMonth=$scope.months[$scope.current];
+    //
+    //
+    // $scope.currentYear="2020";
+    //
+    // $scope.nextMonth = () => {
+    //
+    //     $scope.current+=1;
+    //     $scope.currentMonth= $scope.months[ $scope.current];
+    //
+    //
+    // }
+    //
+    // $scope.prevMonth = () => {
+    //
+    //     $scope.current-=1;
+    //     $scope.currentMonth= $scope.months[ $scope.current];
+    //
+    //
+    // }
+    //
+
+
     $scope.list = [];
-
-    $scope.days = ["mon","tue","wed","thu","fri","sat","sun"];
-
-    $scope.week1 = ["1","2","3","4","5","6","7"];
-    $scope.week2 = ["8","9","10","11","12","13","14"];
-    $scope.week3 = ["15","16","17","18","19","20","21"];
-    $scope.week4 = ["22","23","24","25","26","27","28"];
-    $scope.week51 = ["29","30"," ","  ","   ","    ","     "];
-    $scope.week52 = ["29","30","31"," ","  ","   ","    "];
-    $scope.week53 = [" ","  ","   ","    ","     ","      ","       "];
-    $scope.week54 = ["29"," ","  ","   ","    ","     ","      "];
 
     $scope.count = 0;
     $scope.addItem = () => {
