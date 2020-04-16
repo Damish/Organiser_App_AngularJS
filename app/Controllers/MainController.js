@@ -13,72 +13,59 @@ let controller = app.controller('MainController', ['$scope', $scope => {
     $scope.week53 = [" ","  ","   ","    ","     ","      ","       "];
     $scope.week54 = ["29"," ","  ","   ","    ","     ","      "];
 
-    $scope.fullMonth = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"," ","  ","   ","    ","     "];
+    // $scope.fullMonth = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"," ","  ","   ","    ","     "];
+
+
+    $scope.fullMonthWithDetails = [];
+    for(let x=1;x<=30;x++){
+        $scope.fullMonthWithDetails.push(x);
+    }
 
     $scope.monthCorrecter =[" ","  ","   ",];
 
-
+    $scope.events = [];
     $scope.myEvent={
         day:1,
         name:"hello"
     };
 
-    // $scope.currentListEvent={};
+
     //
-    // for($scope.currentListEvent of $scope.list){
-    //
-    //     $scope.events.push ({
+    // $scope.events = [
+    //     {
     //         day:1,
-    //         name: $scope.eventName ,
-    //         time:$scope.eventTime.toLocaleTimeString()
+    //         name:"Eating",
+    //         time:"12:05pm"
+    //     },
+    //     {
+    //         day:2,
+    //         name:"Drinking",
+    //         time:"12:05pm"
+    //     },
+    //     {
+    //         day:15,
+    //         name:"Meeting",
+    //         time:"12:05pm"
+    //     },
+    //     {
+    //         day:16,
+    //         name:"Hello World",
+    //         time:"12:05pm"
+    //     },
+    //     {
+    //         day:17,
+    //         name:"At home",
+    //         time:"12:05pm"
+    //     },
+    //     {
+    //         day:22,
+    //         name:"Studies",
+    //         time:"12:05pm"
+    //     }
     //
-    //     });
-    //
-    // }
+    // ];
 
 
-
-    $scope.events = [
-        {
-            day:1,
-            name:"Eating",
-            time:"12:05pm"
-        },
-        {
-            day:2,
-            name:"Drinking",
-            time:"12:05pm"
-        },
-        {
-            day:15,
-            name:"Meeting",
-            time:"12:05pm"
-        },
-        {
-            day:16,
-            name:"Hello World",
-            time:"12:05pm"
-        },
-        {
-            day:17,
-            name:"At home",
-            time:"12:05pm"
-        },
-        {
-            day:22,
-            name:"Studies",
-            time:"12:05pm"
-        }
-
-    ];
-
-    $scope.currentEvent={};
-
-    for($scope.currentEvent of $scope.events){
-
-        $scope.fullMonth [ $scope.currentEvent.day-1] = $scope.currentEvent.day + " # " + $scope.currentEvent.name;
-
-    }
 
 
 
@@ -101,10 +88,34 @@ let controller = app.controller('MainController', ['$scope', $scope => {
 
         };
 
+
+        $scope.events.push({
+            day:$scope.eventDate.toLocaleDateString().charAt(2)+$scope.eventDate.toLocaleDateString().charAt(3),
+            name:$scope.eventName.toString(),
+
+        });
+
+        $scope.currentEvent={};
+        for($scope.currentEvent of $scope.events){
+
+            $scope.fullMonthWithDetails [ $scope.currentEvent.day-1] = $scope.currentEvent.day + " # " + $scope.currentEvent.name;
+
+        }
+
+
         $scope.eventName="";
         $scope.eventDate = "";
         $scope.eventTime= "";
         $scope.eventVenue= "";
+
+
+
+
+
+
+
+
+
 
     };
 
