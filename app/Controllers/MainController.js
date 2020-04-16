@@ -1,131 +1,170 @@
 let controller = app.controller('MainController', ['$scope', $scope => {
 
     $scope.list = [];
-
-    $scope.days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-
-    $scope.week1 = ["1","2","3","4","5","6","7"];
-    $scope.week2 = ["8","9","10","11","12","13","14"];
-    $scope.week3 = ["15","16","17","18","19","20","21"];
-    $scope.week4 = ["22","23","24","25","26","27","28"];
-    $scope.week51 = ["29","30"," ","  ","   ","    ","     "];
-    $scope.week52 = ["29","30","31"," ","  ","   ","    "];
-    $scope.week53 = [" ","  ","   ","    ","     ","      ","       "];
-    $scope.week54 = ["29"," ","  ","   ","    ","     ","      "];
-
-    // $scope.fullMonth = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"," ","  ","   ","    ","     "];
-
-
-    $scope.fullMonthWithDetails = [];
-    for(let x=1;x<=30;x++){
-        $scope.fullMonthWithDetails.push(x);
-    }
-
-    $scope.monthCorrecter =[" ","  ","   ",];
+    $scope.days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
     $scope.events = [];
-    $scope.myEvent={
-        day:1,
-        name:"hello"
+
+    //Display current Month functions
+    // start=2; (0,1,2) 2 <- means january month starts on a wednesday(mon,tue,wed)
+
+    $scope.months2020 = [
+        {month: "January", days: 31, start: 2},
+        {month: "February", days: 29, start: 5},
+        {month: "March", days: 31, start: 6},
+        {month: "April", days: 30, start: 2},
+        {month: "May", days: 31, start: 4},
+        {month: "June", days: 30, start: 0},
+        {month: "July", days: 31, start: 2},
+        {month: "August", days: 31, start: 5},
+        {month: "September", days: 30, start: 1},
+        {month: "October", days: 31, start: 3},
+        {month: "November", days: 30, start: 6},
+        {month: "December", days: 31, start: 1}
+    ];
+
+    let month_count = 3;
+    $scope.currentMonth = $scope.months2020[month_count].month;
+
+
+    //Settings for current month displayed (default)
+    $scope.fullMonthDisplay = [];
+
+    $scope.currentMonth_Days = $scope.months2020[month_count].days;
+    for (let x = 1; x <= $scope.currentMonth_Days; x++) {
+        $scope.fullMonthDisplay.push(x);
+    }
+
+
+    $scope.monthCorrecter = [];
+    $scope.monthCorrecterNo = 2;
+    let correctorString = "";
+    for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
+        for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
+            correctorString += (" ");
+        }
+        $scope.monthCorrecter.push(correctorString);
+    }
+
+    //Previous Month calender Settings update
+    $scope.prevMonth = () => {
+        if (month_count > 0) {
+            $scope.currentMonth = $scope.months2020[month_count -= 1].month;
+            $scope.currentMonth_Days = $scope.months2020[month_count].days;
+            $scope.monthCorrecterNo = $scope.months2020[month_count].start;
+
+            $scope.fullMonthDisplay = [];
+            for (let x = 1; x <= $scope.currentMonth_Days; x++) {
+                $scope.fullMonthDisplay.push(x);
+            }
+
+            $scope.monthCorrecter = [];
+            let correctorString = "";
+            for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
+                for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
+                    correctorString += (" ");
+                }
+                $scope.monthCorrecter.push(correctorString);
+            }
+
+
+        }
+    };
+
+    //Next Month calender Settings update
+    $scope.nextMonth = () => {
+        if (month_count < 11) {
+            $scope.currentMonth = $scope.months2020[month_count += 1].month;
+            $scope.currentMonth_Days = $scope.months2020[month_count].days;
+            $scope.monthCorrecterNo = $scope.months2020[month_count].start;
+
+            $scope.fullMonthDisplay = [];
+            for (let x = 1; x <= $scope.currentMonth_Days; x++) {
+                $scope.fullMonthDisplay.push(x);
+            }
+
+
+            $scope.monthCorrecter = [];
+            let correctorString = "";
+            for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
+                for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
+                    correctorString += (" ");
+                }
+                $scope.monthCorrecter.push(correctorString);
+            }
+
+
+        }
     };
 
 
-    //
-    // $scope.events = [
-    //     {
-    //         day:1,
-    //         name:"Eating",
-    //         time:"12:05pm"
-    //     },
-    //     {
-    //         day:2,
-    //         name:"Drinking",
-    //         time:"12:05pm"
-    //     },
-    //     {
-    //         day:15,
-    //         name:"Meeting",
-    //         time:"12:05pm"
-    //     },
-    //     {
-    //         day:16,
-    //         name:"Hello World",
-    //         time:"12:05pm"
-    //     },
-    //     {
-    //         day:17,
-    //         name:"At home",
-    //         time:"12:05pm"
-    //     },
-    //     {
-    //         day:22,
-    //         name:"Studies",
-    //         time:"12:05pm"
-    //     }
-    //
-    // ];
+    $scope.eventDisplay=[]; //to display events under the day
 
-
-
-
-
-
+    //Add new Event Function
     $scope.count = 0;
     $scope.addItem = () => {
 
-        if( $scope.eventName && $scope.eventDate && $scope.eventTime && $scope.eventVenue !== ""  ){
+        if ($scope.eventName && $scope.eventDate && $scope.eventTime && $scope.eventVenue !== "") {
+            $scope.count += 1;
+            $scope.list.push({
+                id: $scope.eventDate.toLocaleDateString() + "- 0" + $scope.count,
+                eName: $scope.eventName,
+                eDate: $scope.eventDate.toLocaleDateString(),
+                eTime: $scope.eventTime.toLocaleTimeString(),
+                eVenue: $scope.eventVenue,
+                complete: false
+            });
+        }
 
-                $scope.count += 1;
 
-                $scope.list.push({
-                     id: $scope.eventDate.toLocaleDateString() + "- 0" +$scope.count,
-                     eName: $scope.eventName ,
-                     eDate: $scope.eventDate.toLocaleDateString() ,
-                     eTime: $scope.eventTime.toLocaleTimeString() ,
-                     eVenue: $scope.eventVenue ,
-                     complete: false
-                });
+        //
+        // if($scope.eventDate.getMonth()>3){
+        //     for(let x=3; x<=$scope.eventDate.getMonth();x++){
+        //          $scope.nextMonth();
+        //     }
+        // }
+        // if($scope.eventDate.getMonth()<3){
+        //     for(let x=$scope.eventDate.getMonth(); x<3;x++){
+        //         $scope.prevMonth();
+        //     }
+        // }
+        //
 
-        };
 
 
         $scope.events.push({
-            day:$scope.eventDate.toLocaleDateString().charAt(2)+$scope.eventDate.toLocaleDateString().charAt(3),
-            name:$scope.eventName.toString(),
-
+            day: $scope.eventDate.getUTCDate()+1,
+            name: $scope.eventName.toString(),
+            eVenue: $scope.eventVenue,
         });
 
-        $scope.currentEvent={};
-        for($scope.currentEvent of $scope.events){
 
-            $scope.fullMonthWithDetails [ $scope.currentEvent.day-1] = $scope.currentEvent.day + " # " + $scope.currentEvent.name;
+
+
+
+        $scope.currentEvent = {};
+        for ($scope.currentEvent of $scope.events) {
+            $scope.fullMonthDisplay [$scope.currentEvent.day - 1] = $scope.currentEvent.day + " * " + $scope.currentEvent.name+ " at " + $scope.currentEvent.eVenue;
 
         }
 
 
-        $scope.eventName="";
+
+        $scope.eventName = "";
         $scope.eventDate = "";
-        $scope.eventTime= "";
-        $scope.eventVenue= "";
-
-
-
-
-
-
-
-
-
+        $scope.eventTime = "";
+        $scope.eventVenue = "";
 
     };
 
+
     $scope.showMe = false;
-    $scope.myFunc = function() {
+    $scope.myFunc = function () {
         $scope.showMe = !$scope.showMe;
     };
 
     $scope.showMe2 = false;
-    $scope.showTable = function() {
+    $scope.showTable = function () {
         $scope.showMe2 = !$scope.showMe2;
     };
 
@@ -137,6 +176,7 @@ let controller = app.controller('MainController', ['$scope', $scope => {
             if (!checked.done) $scope.list.push(checked);
         });
     };
+
 
 }]);
 
