@@ -8,18 +8,18 @@ let controller = app.controller('MainController', ['$scope', $scope => {
     // start=2; (0,1,2) 2 <- means january month starts on a wednesday(mon,tue,wed)
 
     $scope.months2020 = [
-        {month: "January", days: 31, start: 2},
-        {month: "February", days: 29, start: 5},
-        {month: "March", days: 31, start: 6},
-        {month: "April", days: 30, start: 2},
-        {month: "May", days: 31, start: 4},
-        {month: "June", days: 30, start: 0},
-        {month: "July", days: 31, start: 2},
-        {month: "August", days: 31, start: 5},
-        {month: "September", days: 30, start: 1},
-        {month: "October", days: 31, start: 3},
-        {month: "November", days: 30, start: 6},
-        {month: "December", days: 31, start: 1}
+        {mId:1,month: "January", days: 31, start: 2},
+        {mId:2,month: "February", days: 29, start: 5},
+        {mId:3,month: "March", days: 31, start: 6},
+        {mId:4,month: "April", days: 30, start: 2},
+        {mId:5,month: "May", days: 31, start: 4},
+        {mId:6,month: "June", days: 30, start: 0},
+        {mId:7,month: "July", days: 31, start: 2},
+        {mId:8,month: "August", days: 31, start: 5},
+        {mId:9,month: "September", days: 30, start: 1},
+        {mId:10,month: "October", days: 31, start: 3},
+        {mId:11,month: "November", days: 30, start: 6},
+        {mId:12,month: "December", days: 31, start: 1}
     ];
 
     let month_count = 3;//current month is set to April
@@ -132,9 +132,11 @@ let controller = app.controller('MainController', ['$scope', $scope => {
                 id: $scope.count,
                 eName: $scope.eventName,
 
-                eDay: $scope.eventDate.getUTCDate() + 1,
+                eDay: $scope.eventDate.getUTCDate()+3,
                 eMonth: $scope.eventDate.getUTCMonth() + 1,
                 eYear: $scope.eventDate.getUTCFullYear(),
+
+                eDate: $scope.eventDate.toLocaleDateString(),
 
                 eTime: $scope.eventTime.toLocaleTimeString(),
                 eVenue: $scope.eventVenue,
@@ -145,7 +147,7 @@ let controller = app.controller('MainController', ['$scope', $scope => {
 
         //
         // if($scope.eventDate.getMonth()>3){
-        //     for(let x=3; x<=$scope.eventDate.getMonth();x++){
+        //     for(let x=3; x<$scope.eventDate.getMonth();x++){
         //          $scope.nextMonth();
         //     }
         // }
@@ -155,9 +157,9 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         //     }
         // }
         //
-
-
-        $scope.renderEventsToMonth();//events are updated to month
+        //
+        //
+        // $scope.renderEventsToMonth();//events are updated to month
 
         $scope.eventName = "";
         $scope.eventDate = "";
@@ -165,6 +167,48 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         $scope.eventVenue = "";
 
     };
+
+
+    $scope.selectDay = (x) => {
+
+        let currentMonthId = month_count+1;
+
+        // $scope.testDay =x;
+        // $scope.testMonth = currentMonthId;
+
+        $scope.testDay = "Day:"+ x +" Month:" + currentMonthId;
+        $scope.select_day_events=[];
+
+        $scope.currentEvent={};
+        for ($scope.currentEvent of $scope.events){
+
+
+                if ( ($scope.currentEvent.eMonth+1 === currentMonthId ) && ( $scope.currentEvent.eDay===32 ||  $scope.currentEvent.eDay===33 ||  $scope.currentEvent.eDay===34)  && (x === 1) ) {
+                    $scope.select_day_events.push(
+                        "Remind me to "+ $scope.currentEvent.eName +" "+
+                        "on "+ $scope.currentEvent.eDate +" "+
+                        "at "+ $scope.currentEvent.eTime +" "+
+                        "at "+ $scope.currentEvent.eVenue +"."
+                    );
+                }
+
+                if ($scope.currentEvent.eMonth === currentMonthId  && $scope.currentEvent.eDay-3 === x) {
+                    $scope.select_day_events.push(
+                        "Remind me to "+ $scope.currentEvent.eName +" "+
+                        "on "+ $scope.currentEvent.eDate +" "+
+                        "at "+ $scope.currentEvent.eTime +" "+
+                        "at "+ $scope.currentEvent.eVenue +"."
+                    );
+                }
+
+        }
+
+    };
+
+
+
+
+
 
 
     $scope.renderEventsToMonth = () => {
