@@ -192,7 +192,7 @@ let controller = app.controller('MainController', ['$scope', $scope => {
                     );
                 }
 
-                if ($scope.currentEvent.eMonth === currentMonthId  && $scope.currentEvent.eDay-3 === x) {
+                if ($scope.currentEvent.eMonth === currentMonthId  && $scope.currentEvent.eDay-2 === x) {
                     $scope.select_day_events.push(
                         "Remind me to "+ $scope.currentEvent.eName +" "+
                         "on "+ $scope.currentEvent.eDate +" "+
@@ -233,6 +233,11 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         $scope.showMe2 = !$scope.showMe2;
     };
 
+
+    $scope.showCalender = true;
+    $scope.hideCalender = function () {
+        $scope.showCalender = !$scope.showCalender;
+    };
 
 }]);
 

@@ -93,7 +93,7 @@
         <div class="col-md-4">
 
             <div class="d-flex justify-content-end">
-                <button class="btn btn-danger m-2" ng-click="myFunc()">New Event</button>
+                <button class="btn btn-danger m-2" ng-click="myFunc()">New Event/Hide</button>
             </div>
 
             <div ng-show="showMe">
@@ -152,7 +152,7 @@
     </div>
 </div>
 
-<div class="row mt-5 justify-content-center">
+<div class="row mt-4 justify-content-center">
 
     <div class="col-md-8">
 
@@ -187,10 +187,17 @@
     </div>
 </div>
 
+
 <div class="row">
+    <div class="col-md-10 d-flex justify-content-end">
+        <button class="btn btn-dark m-2" ng-click="hideCalender()">Show/Hide Calender</button>
+    </div>
+</div>
+
+<div class="row" ng-show="showCalender" >
     <div class="col">
 
-        <div id='wrap'>
+        <div id='wrap' class="mb-5">
             <div id='calendar'>
                 <div class="row text-center bg-success text-white ml-4 mr-4 mt-3 p-4">
 
