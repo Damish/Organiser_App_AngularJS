@@ -187,17 +187,23 @@
                 <tr class="text-center">
                     <th>Id</th>
                     <th>Event</th>
-                    <th>Date</th>
+                    <th>Day</th>
+                    <th>Month</th>
+                    <th>Year</th>
                     <th>Time</th>
                     <th>Venue</th>
+
                 </tr>
-                <tr ng-repeat="x in list" style="margin-left: 40px" class="text-center">
+                <tr ng-repeat="x in events" style="margin-left: 40px" class="text-center">
 
                     <td ng-bind="x.id"></td>
                     <td ng-bind="x.eName"></td>
-                    <td ng-bind="x.eDate"></td>
+                    <td ng-bind="x.eDay"></td>
+                    <td ng-bind="x.eMonth"></td>
+                    <td ng-bind="x.eYear"></td>
                     <td ng-bind="x.eTime"></td>
                     <td class="mb-5" ng-bind="x.eVenue"></td>
+
 
                 </tr>
             </table>

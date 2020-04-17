@@ -1,6 +1,5 @@
 let controller = app.controller('MainController', ['$scope', $scope => {
 
-    $scope.list = [];
     $scope.days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
     $scope.events = [];
@@ -23,28 +22,49 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         {month: "December", days: 31, start: 1}
     ];
 
-    let month_count = 3;
+    let month_count = 3;//current month is set to April
     $scope.currentMonth = $scope.months2020[month_count].month;
 
-
     //Settings for current month displayed (default)
-    $scope.fullMonthDisplay = [];
+    $scope.thisMonth = () => {
+        $scope.fullMonthDisplay = [];
 
-    $scope.currentMonth_Days = $scope.months2020[month_count].days;
-    for (let x = 1; x <= $scope.currentMonth_Days; x++) {
-        $scope.fullMonthDisplay.push(x);
-    }
-
-
-    $scope.monthCorrecter = [];
-    $scope.monthCorrecterNo = 2;
-    let correctorString = "";
-    for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
-        for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
-            correctorString += (" ");
+        $scope.currentMonth_Days = $scope.months2020[month_count].days;
+        for (let x = 1; x <= $scope.currentMonth_Days; x++) {
+            $scope.fullMonthDisplay.push(x);
         }
-        $scope.monthCorrecter.push(correctorString);
+
+
+        $scope.monthCorrecter = [];
+        $scope.monthCorrecterNo = 2;
+        let correctorString = "";
+        for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
+            for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
+                correctorString += (" ");
+            }
+            $scope.monthCorrecter.push(correctorString);
+        }
+
+
     }
+    $scope.thisMonth();
+
+    // $scope.testEvent = () => {
+    //     $scope.events.push({
+    //         // id: $scope.eventDate.toLocaleDateString() + "- 0" + $scope.count,
+    //         id: 1,
+    //         eName: "Testttt",
+    //
+    //         eDay: 12,
+    //         eMonth: 4,
+    //         eYear: 2020,
+    //
+    //         eTime: "11:00PM",
+    //         eVenue: "Home",
+    //         complete: false
+    //     });
+    // }
+    // $scope.testEvent ();
 
     //Previous Month calender Settings update
     $scope.prevMonth = () => {
@@ -57,6 +77,7 @@ let controller = app.controller('MainController', ['$scope', $scope => {
             for (let x = 1; x <= $scope.currentMonth_Days; x++) {
                 $scope.fullMonthDisplay.push(x);
             }
+
 
             $scope.monthCorrecter = [];
             let correctorString = "";
@@ -98,7 +119,7 @@ let controller = app.controller('MainController', ['$scope', $scope => {
     };
 
 
-    $scope.eventDisplay=[]; //to display events under the day
+    // $scope.eventDisplay = []; //to display events under the day
 
     //Add new Event Function
     $scope.count = 0;
@@ -106,10 +127,15 @@ let controller = app.controller('MainController', ['$scope', $scope => {
 
         if ($scope.eventName && $scope.eventDate && $scope.eventTime && $scope.eventVenue !== "") {
             $scope.count += 1;
-            $scope.list.push({
-                id: $scope.eventDate.toLocaleDateString() + "- 0" + $scope.count,
+            $scope.events.push({
+                // id: $scope.eventDate.toLocaleDateString() + "- 0" + $scope.count,
+                id: $scope.count,
                 eName: $scope.eventName,
-                eDate: $scope.eventDate.toLocaleDateString(),
+
+                eDay: $scope.eventDate.getUTCDate() + 1,
+                eMonth: $scope.eventDate.getUTCMonth() + 1,
+                eYear: $scope.eventDate.getUTCFullYear(),
+
                 eTime: $scope.eventTime.toLocaleTimeString(),
                 eVenue: $scope.eventVenue,
                 complete: false
@@ -131,29 +157,24 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         //
 
 
-
-        $scope.events.push({
-            day: $scope.eventDate.getUTCDate()+1,
-            name: $scope.eventName.toString(),
-            eVenue: $scope.eventVenue,
-        });
-
-
-
-
-
-        $scope.currentEvent = {};
-        for ($scope.currentEvent of $scope.events) {
-            $scope.fullMonthDisplay [$scope.currentEvent.day - 1] = $scope.currentEvent.day + " * " + $scope.currentEvent.name+ " at " + $scope.currentEvent.eVenue;
-
-        }
-
-
+        $scope.renderEventsToMonth();//events are updated to month
 
         $scope.eventName = "";
         $scope.eventDate = "";
         $scope.eventTime = "";
         $scope.eventVenue = "";
+
+    };
+
+
+    $scope.renderEventsToMonth = () => {
+
+        $scope.currentEvent = {};
+
+        for ($scope.currentEvent of $scope.events) {
+            $scope.fullMonthDisplay [$scope.currentEvent.eDay - 1] = $scope.currentEvent.eDay + " * " + $scope.currentEvent.eName + " at " + $scope.currentEvent.eVenue;
+
+        }
 
     };
 
@@ -166,15 +187,6 @@ let controller = app.controller('MainController', ['$scope', $scope => {
     $scope.showMe2 = false;
     $scope.showTable = function () {
         $scope.showMe2 = !$scope.showMe2;
-    };
-
-
-    $scope.removeItem = () => {
-        let oldList = $scope.list;
-        $scope.list = [];
-        angular.forEach(oldList, (checked) => {
-            if (!checked.done) $scope.list.push(checked);
-        });
     };
 
 
