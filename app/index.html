@@ -1,6 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <style>
+
+        #calendar {
+            margin: 0 auto;
+            width: 1100px;
+            background-color: #FFFFFF;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px #C3C3C3;
+            -webkit-box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.18);
+            -moz-box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.18);
+            box-shadow: 0px 0px 21px 2px rgba(0, 0, 0, 0.18);
+        }
+
+        #wrap {
+            width: 1100px;
+            margin: 0 auto;
+        }
+
+        #dayIcon1 {
+            width: 140px;
+            height: 90px;
+
+        }
+
+        #dayIcon2 {
+            width: 140px;
+            height: 90px;
+
+        }
+
+        #dayIcon3 {
+            width: 140px;
+            height: 90px;
+
+        }
+
+
+    </style>
+
+
     <meta charset="utf-8">
     <title>Online Organizer</title>
     <!-- Latest compiled and minified CSS -->
@@ -18,16 +59,37 @@
 
 <body ng-app="ToDoList" ng-controller="MainController">
 
-<div class="text-center "><h1 class="mt-5 mb-5">Online Organizer</h1></div>
+<h5>Hello, you are working on test Branch1</h5>
+
+<div class="text-center "><h1 class="mt-3 mb-3">Online Organizer</h1></div>
 
 
 <div class="container">
     <div class="row">
+
         <div class="col-md-8">
 
-            <!-- Space to implement calender -->
+
+            <div class="row ml-3 mt-5 justify-content-center" style="height:270px" ng-show="showMe">
+                <div class="col alert alert-primary">
+                    <h5 style="font-size: x-large" class="alert-heading">Your Reminder in words . .</h5>
+                    <hr>
+                    <span style="font-size: xx-large">Remind me about&nbsp; </span>
+                    <span style="font-size: xx-large" ng-bind="eventName"></span>
+                    <span style="font-size: xx-large"> &nbsp;on&nbsp; </span>
+                    <span style="font-size: xx-large" ng-bind="eventDate.toLocaleDateString()"></span>
+                    <span style="font-size: xx-large"> &nbsp;at&nbsp; </span>
+                    <span style="font-size: xx-large" ng-bind="eventTime.toLocaleTimeString()"></span>
+                    <span style="font-size: xx-large"> &nbsp;at&nbsp; </span>
+                    <span style="font-size: xx-large" ng-bind="eventVenue"></span>
+                    <span style="font-size: xx-large">.</span>
+                </div>
+            </div>
+
 
         </div>
+
+
         <div class="col-md-4">
 
             <div class="d-flex justify-content-end">
@@ -46,63 +108,78 @@
                        placeholder="Venue" value=" " required>
 
                 <div class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-success" ng-click="addItem()" onclick="myFunction()">Add
+                    <button type="button" class="btn btn-success" ng-click="addItem()">Add
                         event
                     </button>
                 </div>
 
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br/>
+
+
+<div class="row">
+    <div class="col ml-5 mr-0"></div>
+
+    <div class="col ml-3 mr-3 " ng-repeat="x in select_day_events">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title" ng-bind="x"></h4>
+                <p class="card-text" ng-bind="testDay"></p>
             </div>
         </div>
     </div>
 
-    <div class="row mt-5 justify-content-center" ng-show="showMe">
+    <div class="col ml-0 mr-5"></div>
+</div>
 
+<!--<p ng-bind="testDay"></p>-->
+<!--<p ng-bind="testMonth"></p>-->
 
-        <div class="col-md-11 alert alert-info">
+<!--<div class="row" >-->
+<!--        <div ng-bind="x"></div>-->
 
-            <h5 style="font-size: large" class="alert-heading">Your Reminder in words . .</h5>
-            <hr>
+<!--</div>-->
 
-            <span style="font-size: x-large">Remind me about&nbsp; </span>
-            <span style="font-size: x-large" ng-bind="eventName"></span>
-            <span style="font-size: x-large"> &nbsp;on&nbsp; </span>
-            <span style="font-size: x-large" ng-bind="eventDate.toLocaleDateString()"></span>
-            <span style="font-size: x-large"> &nbsp;at&nbsp; </span>
-            <span style="font-size: x-large" ng-bind="eventTime.toLocaleTimeString()"></span>
-            <span style="font-size: x-large"> &nbsp;at&nbsp; </span>
-            <span style="font-size: x-large" ng-bind="eventVenue"></span>
-            <span style="font-size: x-large">.</span>
-
-        </div>
-
-
+<div class="row">
+    <div class="col-md-10 d-flex justify-content-end">
+        <button class="btn btn-primary m-2" ng-click="showTable()">Show/Hide All Events</button>
     </div>
 </div>
 
 <div class="row mt-5 justify-content-center">
 
-    <div class="col-md-10">
-
-        <div class="col-md-11 d-flex justify-content-end">
-            <button class="btn btn-primary m-2" ng-click="showTable()">Show/Hide All Events</button>
-        </div>
+    <div class="col-md-8">
 
         <div ng-show="showMe2">
             <table class="table table-hover table-borderless">
                 <tr class="text-center">
                     <th>Id</th>
                     <th>Event</th>
-                    <th>Date</th>
+                    <th>UTCDay</th>
+                    <th>UTCMonth</th>
+                    <th>UTCYear</th>
                     <th>Time</th>
                     <th>Venue</th>
+                    <th>Full_Date</th>
+
+
                 </tr>
-                <tr ng-repeat="x in list" style="margin-left: 40px" class="text-center">
+                <tr ng-repeat="x in events" style="margin-left: 40px" class="text-center">
 
                     <td ng-bind="x.id"></td>
                     <td ng-bind="x.eName"></td>
-                    <td ng-bind="x.eDate"></td>
+                    <td ng-bind="x.eDay"></td>
+                    <td ng-bind="x.eMonth"></td>
+                    <td ng-bind="x.eYear"></td>
                     <td ng-bind="x.eTime"></td>
                     <td class="mb-5" ng-bind="x.eVenue"></td>
+                    <td ng-bind="x.eDate"></td>
 
                 </tr>
             </table>
@@ -110,15 +187,61 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col">
 
+        <div id='wrap'>
+            <div id='calendar'>
+                <div class="row text-center bg-success text-white ml-4 mr-4 mt-3 p-4">
+
+                    <div id="prev" class="col" style="float: left; padding-top: 10px;" ng-click="prevMonth()">&#10094;
+                    </div>
+                    <div class="col text-center">
+                        <span style="font-size:xx-large" ng-bind="currentMonth"></span> <br/>
+                        <span style="font-size:18px">2020</span>
+                    </div>
+
+                    <div id="next" class="col" style="float: right; padding-top: 10px;" ng-click="nextMonth()">
+                        &#10095;
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+
+                    <div id="dayIcon1" class="mt-2 mb-2 ml-1 mr-1" ng-repeat="x in days">
+                        <div class="bg-warning col mt-4 mb-3 ml-5 mr-5 p-2 text-center" ng-bind="x"></div>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div id="dayIcon3" class="mt-2 mb-2 ml-1 mr-1" ng-repeat="x in monthCorrecter">
+                        <div class="col bg-light mt-2 mb-3 ml-5 mr-5 p-3 text-center">
+                            <span ng-bind="x"></span>
+                        </div>
+                    </div>
+
+                    <div id="dayIcon2" class="mt-2 mb-2 ml-1 mr-1" ng-repeat="x in fullMonthDisplay"
+                         ng-click="selectDay(x)">
+                        <div class="col bg-light mt-2 mb-3 ml-5 mr-5 p-3 text-center">
+                            <span ng-bind="x"></span>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 </div>
 
 
-</div>
-</div>
 
 
-</div>
 
 <script src="lib/angular/angular.js"></script>
 <script src="lib/angular-route/angular-route.js"></script>
