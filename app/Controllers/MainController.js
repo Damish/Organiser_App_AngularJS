@@ -142,6 +142,10 @@ let controller = app.controller('MainController', ['$scope', $scope => {
                 eVenue: $scope.eventVenue,
                 complete: false
             });
+
+            $scope.showEventsSelectedDay=false;
+            $scope.showCalender = true;
+
         }
 
 
@@ -176,7 +180,7 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         // $scope.testDay =x;
         // $scope.testMonth = currentMonthId;
 
-        $scope.testDay = "Day:"+ x +" Month:" + currentMonthId;
+        $scope.testDay = "Your Events for " +x +"/" + currentMonthId +"/2020";
         $scope.select_day_events=[];
 
         $scope.currentEvent={};
@@ -190,6 +194,9 @@ let controller = app.controller('MainController', ['$scope', $scope => {
                         "at "+ $scope.currentEvent.eTime +" "+
                         "at "+ $scope.currentEvent.eVenue +"."
                     );
+
+                    $scope.showCalender = false;
+                    $scope.showEventsSelectedDay=true;
                 }
 
                 if ($scope.currentEvent.eMonth === currentMonthId  && $scope.currentEvent.eDay-2 === x) {
@@ -199,9 +206,16 @@ let controller = app.controller('MainController', ['$scope', $scope => {
                         "at "+ $scope.currentEvent.eTime +" "+
                         "at "+ $scope.currentEvent.eVenue +"."
                     );
+
+                    $scope.showCalender = false;
+                    $scope.showEventsSelectedDay=true;
+
                 }
 
         }
+
+
+
 
     };
 
@@ -236,8 +250,12 @@ let controller = app.controller('MainController', ['$scope', $scope => {
 
     $scope.showCalender = true;
     $scope.hideCalender = function () {
+        $scope.showMe =!$scope.showMe;
         $scope.showCalender = !$scope.showCalender;
+
     };
+
+    $scope.showEventsSelectedDay=false;
 
 }]);
 
