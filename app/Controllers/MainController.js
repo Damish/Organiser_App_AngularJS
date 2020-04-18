@@ -163,7 +163,8 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         //
         //
         //
-        // $scope.renderEventsToMonth();//events are updated to month
+
+        // $scope.renderEventsToMonth( $scope.eventDate.getUTCMonth() + 1);//events are updated to month
 
         $scope.eventName = "";
         $scope.eventDate = "";
@@ -180,13 +181,17 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         // $scope.testDay =x;
         // $scope.testMonth = currentMonthId;
 
-        $scope.testDay = "Your Events for " +x +"/" + currentMonthId +"/2020";
+        $scope.testDay = "Your Events for " + x +"/" + currentMonthId +"/2020";
         $scope.select_day_events=[];
 
         $scope.currentEvent={};
         for ($scope.currentEvent of $scope.events){
 
+            // if($scope.events==null){
+            //     $scope.showEventsSelectedDay=false;
+            // }
 
+                //when selected day is 1
                 if ( ($scope.currentEvent.eMonth+1 === currentMonthId ) && ( $scope.currentEvent.eDay===32 ||  $scope.currentEvent.eDay===33 ||  $scope.currentEvent.eDay===34)  && (x === 1) ) {
                     $scope.select_day_events.push(
                         "Remind me to "+ $scope.currentEvent.eName +" "+
@@ -194,11 +199,10 @@ let controller = app.controller('MainController', ['$scope', $scope => {
                         "at "+ $scope.currentEvent.eTime +" "+
                         "at "+ $scope.currentEvent.eVenue +"."
                     );
-
-                    $scope.showCalender = false;
+                    $scope.showMe=false;
                     $scope.showEventsSelectedDay=true;
                 }
-
+                //when selected day is not 1 (2-31)
                 if ($scope.currentEvent.eMonth === currentMonthId  && $scope.currentEvent.eDay-2 === x) {
                     $scope.select_day_events.push(
                         "Remind me to "+ $scope.currentEvent.eName +" "+
@@ -207,7 +211,7 @@ let controller = app.controller('MainController', ['$scope', $scope => {
                         "at "+ $scope.currentEvent.eVenue +"."
                     );
 
-                    $scope.showCalender = false;
+                    $scope.showMe = false;
                     $scope.showEventsSelectedDay=true;
 
                 }
@@ -221,20 +225,17 @@ let controller = app.controller('MainController', ['$scope', $scope => {
 
 
 
-
-
-
-
-    $scope.renderEventsToMonth = () => {
-
-        $scope.currentEvent = {};
-
-        for ($scope.currentEvent of $scope.events) {
-            $scope.fullMonthDisplay [$scope.currentEvent.eDay - 1] = $scope.currentEvent.eDay + " * " + $scope.currentEvent.eName + " at " + $scope.currentEvent.eVenue;
-
-        }
-
-    };
+    // $scope.renderEventsToMonth = (m) => {
+    //
+    //     $scope.currentEvent = {};
+    //
+    //     for ($scope.currentEvent of $scope.events) {
+    //         if($scope.currentEvent.eMonth = m){
+    //             $scope.fullMonthDisplay [$scope.currentEvent.eDay -3] = $scope.currentEvent.eDay-2 + " * ";
+    //         }
+    //     }
+    //
+    // };
 
 
     $scope.showMe = false;
@@ -242,15 +243,15 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         $scope.showMe = !$scope.showMe;
     };
 
-    $scope.showMe2 = false;
+    $scope.showTable2 = false;
     $scope.showTable = function () {
-        $scope.showMe2 = !$scope.showMe2;
+        $scope.showTable2 = !$scope.showTable2;
     };
 
 
     $scope.showCalender = true;
     $scope.hideCalender = function () {
-        $scope.showMe =!$scope.showMe;
+        // $scope.showMe =!$scope.showMe;
         $scope.showCalender = !$scope.showCalender;
 
     };
