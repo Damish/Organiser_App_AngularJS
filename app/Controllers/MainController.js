@@ -203,7 +203,7 @@ let controller = app.controller('MainController', ['$scope', $scope => {
             if (($scope.currentEvent.eMonth + 1 === currentMonthId) && ($scope.currentEvent.eDay === 32 || $scope.currentEvent.eDay === 33 || $scope.currentEvent.eDay === 34) && (x === 1)) {
                 $scope.select_day_events.push({
                     id: select_day_count,
-                    content: "Remind me to " + $scope.currentEvent.eName + " " +
+                    content: "Remind me about " + $scope.currentEvent.eName + " " +
                         "on " + $scope.currentEvent.eDate + " " +
                         "at " + $scope.currentEvent.eTime + " " +
                         "at " + $scope.currentEvent.eVenue + "."
@@ -216,7 +216,7 @@ let controller = app.controller('MainController', ['$scope', $scope => {
             if ($scope.currentEvent.eMonth === currentMonthId && $scope.currentEvent.eDay - 2 === x) {
                 $scope.select_day_events.push({
                     id: select_day_count,
-                    content: "Remind me to " + $scope.currentEvent.eName + " " +
+                    content: "Remind me about " + $scope.currentEvent.eName + " " +
                         "on " + $scope.currentEvent.eDate + " " +
                         "at " + $scope.currentEvent.eTime + " " +
                         "at " + $scope.currentEvent.eVenue + "."
