@@ -90,7 +90,6 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-
 </head>
 
 
@@ -195,9 +194,14 @@
                     <input type="text" id="eVenue" class="form-control form-control-lg mb-3" ng-model="eventVenue"
                            placeholder="Venue" value=" " required>
 
-                    <div class="d-flex justify-content-center">
+
+                    <div ng-show="btnAddItem" class="row d-flex justify-content-center">
                         <button type="button" class="btn btn-success" ng-click="addItem()">Add
                             event
+                        </button>
+                    </div>
+                    <div ng-show="btnSaveChanges" class="row d-flex justify-content-center">
+                        <button type="button" class="btn btn-warning" ng-click="saveChanges()">Save Changes
                         </button>
                     </div>
 
@@ -214,11 +218,21 @@
                         </div>
 
                         <div class="row ">
-                            <div class="col ml-3 mr-3 mt-1 mb-1" ng-repeat="x in select_day_events">
+                            <div class="row ml-3 mr-3 mt-1 mb-1" ng-repeat="x in select_day_events">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title" ng-bind="x"></h4>
-                                        <p class="card-text" ng-bind="testDay"></p>
+                                        <div class="row">
+                                            <h4 class="card-title" ng-bind="x.content"></h4>
+                                            id : <h5 class="card-title" ng-bind="x.id"></h5>
+                                            <p class="card-text" ng-bind="testDay"></p>
+                                        </div>
+                                        <div class="row">
+                                            <button class="btn btn-danger m-2" ng-click="removeSelected(x.id)">Delete
+                                            </button>
+                                            <button class="btn btn-primary m-2" ng-click="editSelected(x.id)">Edit
+                                            </button>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +240,7 @@
 
 
                         <div class="row mt-3">
-                            <div class="col-md-10 d-flex justify-content-end">
+                            <div class="col-md-10">
                                 <button class="btn btn-warning m-2" ng-click="hideCalender()">Show/Hide Calender
                                 </button>
                             </div>
@@ -253,7 +267,7 @@
                             </tr>
                             <tr ng-repeat="x in events" class="text-center">
 
-                                <td ng-bind="x.id"></td>
+                                <td ng-bind="x.eid"></td>
                                 <td ng-bind="x.eName"></td>
                                 <td ng-bind="x.eTime"></td>
                                 <td class="mb-5" ng-bind="x.eVenue"></td>
@@ -290,79 +304,24 @@
 <br/>
 
 
-<!--<p ng-bind="testDay"></p>-->
-<!--<p ng-bind="testMonth"></p>-->
+<span ng-bind="testt"></span>
+<br/>
+<span ng-bind="testaa"></span>
 
-<!--<div class="row">-->
-<!--        <div ng-bind="x"></div>-->
-
-<!--</div>-->
-
-
-<!--<div class="row" ng-show="showCalender">-->
-<!--    <div class="col">-->
-
-<!--        <div id='wrap' class="mb-5">-->
-<!--            <div id='calendar'>-->
-<!--                <div class="row text-center bg-success text-white ml-4 mr-4 mt-3 p-4">-->
-
-<!--                    <div id="prev" class="col" style="float: left; padding-top: 10px;" ng-click="prevMonth()">&#10094;-->
-<!--                    </div>-->
-<!--                    <div class="col text-center">-->
-<!--                        <span style="font-size:xx-large" ng-bind="currentMonth"></span> <br/>-->
-<!--                        <span style="font-size:18px">2020</span>-->
-<!--                    </div>-->
-
-<!--                    <div id="next" class="col" style="float: right; padding-top: 10px;" ng-click="nextMonth()">-->
-<!--                        &#10095;-->
-<!--                    </div>-->
-
-
-<!--                </div>-->
-
-<!--                <div class="row">-->
-
-<!--                    <div id="dayIcon1" class="mt-2 mb-2 ml-1 mr-1" ng-repeat="x in days">-->
-<!--                        <div class="bg-warning col mt-4 mb-3 ml-5 mr-5 p-2 text-center" ng-bind="x"></div>-->
-<!--                    </div>-->
-
-<!--                </div>-->
-<!--                <div class="row mr-4">-->
-
-<!--                    <div id="dayIcon3" class="mt-1 mb-1 ml-1 mr-1" ng-repeat="x in monthCorrecter">-->
-<!--                        <div id="dayIconReal1" class="col mt-1 mb-2 ml-5 mr-5 p-3 text-center" ng-bind="x">-->
-
-<!--                        </div>-->
-<!--                    </div>-->
-
-<!--                    <div id="dayIcon2" class="mt-1 mb-1 ml-1 mr-1 text-white" ng-repeat="x in fullMonthDisplay"-->
-<!--                         ng-click="selectDay(x)">-->
-
-<!--                        <div id="dayIconReal2" class="col mt-1 mb-2 ml-5 mr-5 p-3 text-center" ng-bind="x">-->
-
-<!--                        </div>-->
-
-<!--                    </div>-->
-
-
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-
-<!--    </div>-->
-<!--</div>-->
-
+<!--<h1 ng-bind="eN"></h1>-->
+<!--<h1 ng-bind="eD"></h1>-->
+<!--<h1 ng-bind="eT"></h1>-->
+<!--<h1 ng-bind="eV"></h1>-->
 
 <script src="lib/angular/angular.js"></script>
 <script src="lib/angular-route/angular-route.js"></script>
 <!--Following codes is used to import the app and controller-->
 <script src="app.js"></script>
-<script src="controllers/MainController.js"></script>
+<script src="Controllers/MainController.js"></script>
 <!---->
 <script src="core/version/version.js"></script>
 <script src="core/version/version-directive.js"></script>
 <script src="core/version/interpolate-filter.js"></script>
-s
+
 </body>
 </html>
