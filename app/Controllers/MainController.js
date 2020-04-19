@@ -1,5 +1,11 @@
-let controller = app.controller('MainController', ['$scope', $scope => {
+/*
+ * Developed by Samarajeewa D.
+ * Registration No: IT18189704
+ * Last Updated : 20.04.2020 12:12AM
+ * Email:damishs88@gmail.com
+ */
 
+let controller = app.controller('MainController', ['$scope', $scope => {
 
     /*
     * This events array is used to save incoming events.
