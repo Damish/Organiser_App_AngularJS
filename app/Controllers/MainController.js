@@ -6,7 +6,6 @@ let controller = app.controller('MainController', ['$scope', $scope => {
 
     //Display current Month functions
     // start=2; (0,1,2) 2 <- means january month starts on a wednesday(mon,tue,wed)
-
     $scope.months2020 = [
         {mId: 1, month: "January", days: 31, start: 2},
         {mId: 2, month: "February", days: 29, start: 5},
@@ -22,180 +21,279 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         {mId: 12, month: "December", days: 31, start: 1}
     ];
 
-    let month_count = 3;//current month is set to April
-    $scope.currentMonth = $scope.months2020[month_count].month;
+    let month_count_global = 3;//default current month is set to April
+    let month_corrector_global = $scope.months2020[3].start; //April month day1 correcter is set as default
 
-    //Settings for current month displayed (default)
-    $scope.thisMonth = () => {
+    // $scope.currentMonth = $scope.months2020[month_count_global].month;
+
+    //works for any month :) with the given parameters
+    $scope.currentMonthRender = (monthCount,monthCorrecter,y) => {
+        // month_count = 3;
+
+        $scope.currentMonth = $scope.months2020[monthCount].month;
+
+
+        $scope.thisMonth_realMonth=$scope.months2020[monthCount].month;
+        $scope.thisMonth_realMonthCorrector=monthCorrecter;
+
+
+        month_count_global = monthCount;
+        month_corrector_global = monthCorrecter;
+
+        // $scope.thismonth_has_event=y;
+
         $scope.fullMonthDisplay = [];
-
-        $scope.currentMonth_Days = $scope.months2020[month_count].days;
+        $scope.currentMonth_Days = $scope.months2020[monthCount].days;
         for (let x = 1; x <= $scope.currentMonth_Days; x++) {
-            $scope.fullMonthDisplay.push(x);
+
+            if(x===y){
+                $scope.fullMonthDisplay.push({
+                    id: x,
+                    hasEvents: "New Event",
+                });
+            }
+            else {
+                $scope.fullMonthDisplay.push({
+                    id: x,
+                    hasEvents: " ",
+                });
+            }
         }
 
 
         $scope.monthCorrecter = [];
-        $scope.monthCorrecterNo = 2;
+
         let correctorString = "";
-        for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
-            for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
+        for (let x = 1; x <= month_corrector_global; x++) {
+            for (let x = 1; x <= month_corrector_global; x++) {
                 correctorString += (" ");
             }
             $scope.monthCorrecter.push(correctorString);
         }
 
-
     }
-    $scope.thisMonth();
 
-    // $scope.testEvent = () => {
-    //     $scope.events.push({
-    //         // id: $scope.eventDate.toLocaleDateString() + "- 0" + $scope.count,
-    //         id: 1,
-    //         eName: "Testttt",
-    //
-    //         eDay: 12,
-    //         eMonth: 4,
-    //         eYear: 2020,
-    //
-    //         eTime: "11:00PM",
-    //         eVenue: "Home",
-    //         complete: false
-    //     });
-    // }
-    // $scope.testEvent ();
+    //Settings for current month displayed (default)
+    $scope.thisMonthApril = () => {
+
+        $scope.currentMonth = $scope.months2020[3].month;//display month name on top
+
+        $scope.currentMonthRender(3,2,100); //y=100 to confirm there is no events at the begining :)
+
+        // $scope.prevmonth_has_event=y;
+        //         //
+        //         // if (month_count > 0) {
+        //         //     $scope.fullMonthDisplay = [];
+        //         //     $scope.currentMonth = $scope.months2020[month_count -= 1].month;
+        //         //     $scope.currentMonth_Days = $scope.months2020[month_count].days;
+        //         //     $scope.monthCorrecterNo = $scope.months2020[month_count].start;
+        //         //
+        //         //     for (let x = 1; x <= $scope.currentMonth_Days; x++) {
+        //         //         if(x===y){
+        //         //             $scope.fullMonthDisplay.push({
+        //         //                 id: x,
+        //         //                 hasEvents: "New Event",
+        //         //             });
+        //         //
+        //         //         }
+        //         //         else {
+        //         //             $scope.fullMonthDisplay.push({
+        //         //                 id: x,
+        //         //                 hasEvents: " ",
+        //         //             });
+        //         //         }
+        //         //     }
+        //         //
+        //         //
+        //         //     $scope.monthCorrecter = [];
+        //         //     let correctorString = "";
+        //         //     for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
+        //         //         for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
+        //         //             correctorString += (" ");
+        //         //         }
+        //         //         $scope.monthCorrecter.push(correctorString);
+        //         //     }
+        //         //
+        //         //
+        //         // }
+    };
+
+    $scope.thisMonthApril(); //default display April month function fired :) Any time you visit.you see this month.
 
     //Previous Month calender Settings update
     $scope.prevMonth = () => {
-        if (month_count > 0) {
-            $scope.currentMonth = $scope.months2020[month_count -= 1].month;
-            $scope.currentMonth_Days = $scope.months2020[month_count].days;
-            $scope.monthCorrecterNo = $scope.months2020[month_count].start;
-
-            $scope.fullMonthDisplay = [];
-            for (let x = 1; x <= $scope.currentMonth_Days; x++) {
-                $scope.fullMonthDisplay.push(x);
-            }
 
 
-            $scope.monthCorrecter = [];
-            let correctorString = "";
-            for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
-                for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
-                    correctorString += (" ");
-                }
-                $scope.monthCorrecter.push(correctorString);
-            }
+        month_corrector_global = $scope.months2020[month_count_global-1].start;
 
+        $scope.currentMonth = $scope.months2020[month_count_global-1].month;
 
-        }
+        $scope.currentMonthRender(month_count_global-=1,month_corrector_global,100);
+
+        // $scope.prevmonth_has_event=y;
+        //         //
+        //         // if (month_count > 0) {
+        //         //     $scope.fullMonthDisplay = [];
+        //         //     $scope.currentMonth = $scope.months2020[month_count -= 1].month;
+        //         //     $scope.currentMonth_Days = $scope.months2020[month_count].days;
+        //         //     $scope.monthCorrecterNo = $scope.months2020[month_count].start;
+        //         //
+        //         //     for (let x = 1; x <= $scope.currentMonth_Days; x++) {
+        //         //         if(x===y){
+        //         //             $scope.fullMonthDisplay.push({
+        //         //                 id: x,
+        //         //                 hasEvents: "New Event",
+        //         //             });
+        //         //
+        //         //         }
+        //         //         else {
+        //         //             $scope.fullMonthDisplay.push({
+        //         //                 id: x,
+        //         //                 hasEvents: " ",
+        //         //             });
+        //         //         }
+        //         //     }
+        //         //
+        //         //
+        //         //     $scope.monthCorrecter = [];
+        //         //     let correctorString = "";
+        //         //     for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
+        //         //         for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
+        //         //             correctorString += (" ");
+        //         //         }
+        //         //         $scope.monthCorrecter.push(correctorString);
+        //         //     }
+        //         //
+        //         //
+        //         // }
     };
 
     //Next Month calender Settings update
     $scope.nextMonth = () => {
-        if (month_count < 11) {
-            $scope.currentMonth = $scope.months2020[month_count += 1].month;
-            $scope.currentMonth_Days = $scope.months2020[month_count].days;
-            $scope.monthCorrecterNo = $scope.months2020[month_count].start;
 
-            $scope.fullMonthDisplay = [];
-            for (let x = 1; x <= $scope.currentMonth_Days; x++) {
-                $scope.fullMonthDisplay.push(x);
-            }
+        month_corrector_global = $scope.months2020[month_count_global+1].start;
 
+        $scope.currentMonth = $scope.months2020[month_count_global+1].month;
 
-            $scope.monthCorrecter = [];
-            let correctorString = "";
-            for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
-                for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
-                    correctorString += (" ");
-                }
-                $scope.monthCorrecter.push(correctorString);
-            }
+        $scope.currentMonthRender(month_count_global+=1,month_corrector_global,100);
 
-
-        }
+        // $scope.nextmonth_has_event=y;
+        //
+        // if (month_count < 11) {
+        //     $scope.fullMonthDisplay = [];
+        //     $scope.currentMonth = $scope.months2020[month_count += 1].month;
+        //     $scope.currentMonth_Days = $scope.months2020[month_count].days;
+        //     $scope.monthCorrecterNo = $scope.months2020[month_count].start;
+        //
+        //     for (let x = 1; x <= $scope.currentMonth_Days; x++) {
+        //         if(x===y){
+        //             $scope.fullMonthDisplay.push({
+        //                 id: x,
+        //                 hasEvents: "New Event",
+        //             });
+        //
+        //         }
+        //         else {
+        //             $scope.fullMonthDisplay.push({
+        //                 id: x,
+        //                 hasEvents: " ",
+        //             });
+        //         }
+        //     }
+        //
+        //
+        //     $scope.monthCorrecter = [];
+        //     let correctorString = "";
+        //     for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
+        //         for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
+        //             correctorString += (" ");
+        //         }
+        //         $scope.monthCorrecter.push(correctorString);
+        //     }
+        //
+        //
+        // }
     };
-
-
-    // $scope.eventDisplay = []; //to display events under the day
 
     //Add new Event Function
     let count = -1;
+    $scope.currentEvent1 = {};
     $scope.addItem = () => {
+
+        $scope.thisMonthApril();
 
         if ($scope.eventName && $scope.eventDate && $scope.eventTime && $scope.eventVenue !== "") {
             count += 1;
-            $scope.events.push({
+            $scope.newItem = {
                 // id: $scope.eventDate.toLocaleDateString() + "- 0" + $scope.count,
                 eid: count,
                 eName: $scope.eventName,
-
                 eDay: $scope.eventDate.getUTCDate() + 3,
                 eMonth: $scope.eventDate.getUTCMonth() + 1,
                 eYear: $scope.eventDate.getUTCFullYear(),
-
                 eDate: $scope.eventDate.toLocaleDateString(),
-
                 eventDateFull: $scope.eventDate,
                 eventTimeFull: $scope.eventTime,
-
                 eTime: $scope.eventTime.toLocaleTimeString(),
                 eVenue: $scope.eventVenue,
                 complete: false,
-            });
+            };
+            $scope.events.push($scope.newItem);
 
+
+            if($scope.eventDate.getMonth()===3){
+                $scope.thisMonth_realMonth="This month is april.Month rendering caused error."
+                $scope.thisMonthApril();
+                $scope.fullMonthDisplay [$scope.newItem.eDay - 3].hasEvents = "New Event";
+            }
+
+            if($scope.eventDate.getMonth()>3){
+                $scope.thisMonth_realMonth="This month is after april.Month rendering caused error."
+                for(let month_count=3; month_count<$scope.eventDate.getMonth();month_count++){
+                    $scope.nextMonth();
+                    $scope.fullMonthDisplay [$scope.newItem.eDay - 3].hasEvents = "New Event";
+                }
+                month_count_global=$scope.eventDate.getMonth();
+            }
+
+            if($scope.eventDate.getMonth()<3){
+
+                $scope.thisMonth_realMonth="This month is before april.Month rendering caused error."
+
+                let prevMonthNo=$scope.eventDate.getMonth();
+                for(prevMonthNo;prevMonthNo<(month_count_global);prevMonthNo++){
+                    $scope.prevMonth();
+                    $scope.fullMonthDisplay [$scope.newItem.eDay - 3].hasEvents = "New Event";
+                }
+                month_count_global=$scope.eventDate.getMonth();
+            }
 
             $scope.showEventsSelectedDay = false;
-            $scope.showCalender = true;
+            // $scope.showCalender = true;
 
+            $scope.showMe = false;
         }
-
-
-        //
-        // if($scope.eventDate.getMonth()>3){
-        //     for(let x=3; x<$scope.eventDate.getMonth();x++){
-        //          $scope.nextMonth();
-        //     }
-        // }
-        // if($scope.eventDate.getMonth()<3){
-        //     for(let x=$scope.eventDate.getMonth(); x<3;x++){
-        //         $scope.prevMonth();
-        //     }
-        // }
-        //
-        //
-        //
-
-        // $scope.renderEventsToMonth( $scope.eventDate.getUTCMonth() + 1);//events are updated to month
-
         $scope.eventName = "";
         $scope.eventDate = "";
         $scope.eventTime = "";
         $scope.eventVenue = "";
 
-        let startDate = new Date();
-        let endDate = new Date();
-        let seconds = (endDate.getTime() - startDate.getTime()) / 1000;
-
-
     };
-
 
     $scope.selectDay = (x) => {
 
         let select_day_count = -1;
+        let currentMonthId = month_count_global + 1;
 
-        let currentMonthId = month_count + 1;
-
-        // $scope.testDay =x;
+        $scope.testDay1 = x;
         // $scope.testMonth = currentMonthId;
-
         $scope.testDay = "Your Events for " + x + "/" + currentMonthId + "/2020";
-        $scope.select_day_events = [];
+        $scope.testDayWords = "Your Events for " + x + "/" + currentMonthId + "/2020";
 
+        $scope.select_day_events = [];
         $scope.currentEvent = {};
+        $scope.eventsAvailable = "No Events";
+
         for ($scope.currentEvent of $scope.events) {
             select_day_count += 1;
 
@@ -203,20 +301,23 @@ let controller = app.controller('MainController', ['$scope', $scope => {
             if (($scope.currentEvent.eMonth + 1 === currentMonthId) && ($scope.currentEvent.eDay === 32 || $scope.currentEvent.eDay === 33 || $scope.currentEvent.eDay === 34) && (x === 1)) {
                 $scope.select_day_events.push({
                     id: select_day_count,
-                    content: "Remind me to " + $scope.currentEvent.eName + " " +
+                    content: "Remind me about " + $scope.currentEvent.eName + " " +
                         "on " + $scope.currentEvent.eDate + " " +
                         "at " + $scope.currentEvent.eTime + " " +
                         "at " + $scope.currentEvent.eVenue + "."
                 });
                 $scope.showMe = false;
                 $scope.showEventsSelectedDay = true;
+
+                $scope.eventsAvailable = "Events available";
+
             }
 
             //when selected day is not 1 (2-31)
             if ($scope.currentEvent.eMonth === currentMonthId && $scope.currentEvent.eDay - 2 === x) {
                 $scope.select_day_events.push({
                     id: select_day_count,
-                    content: "Remind me to " + $scope.currentEvent.eName + " " +
+                    content: "Remind me about " + $scope.currentEvent.eName + " " +
                         "on " + $scope.currentEvent.eDate + " " +
                         "at " + $scope.currentEvent.eTime + " " +
                         "at " + $scope.currentEvent.eVenue + "."
@@ -224,36 +325,22 @@ let controller = app.controller('MainController', ['$scope', $scope => {
                 $scope.showMe = false;
                 $scope.showEventsSelectedDay = true;
 
+                $scope.eventsAvailable = "Events available";
             }
-
         }
-
-
+        $scope.showEventsSelectedDay = true;
     };
-
-    // $scope.renderEventsToMonth = (m) => {
-    //
-    //     $scope.currentEvent = {};
-    //
-    //     for ($scope.currentEvent of $scope.events) {
-    //         if($scope.currentEvent.eMonth = m){
-    //             $scope.fullMonthDisplay [$scope.currentEvent.eDay -3] = $scope.currentEvent.eDay-2 + " * ";
-    //         }
-    //     }
-    //
-    // };
-
 
     $scope.removeSelected = (x) => {
 
         $scope.showEventsSelectedDay = false;
         $scope.events.splice(x, 1);
 
+        $scope.currentMonthRender(month_count_global,month_corrector_global,100);
     };
 
     $scope.btnAddItem = true;
     $scope.btnSaveChanges = false;
-
 
     let oldItem_eid;//old item location saved as a variable for use in saveChanges() function
 
@@ -285,38 +372,11 @@ let controller = app.controller('MainController', ['$scope', $scope => {
 
         }
 
-        //
-        // if ($scope.eventName && $scope.eventDate && $scope.eventTime && $scope.eventVenue !== "") {
-        //     count += 1;
-        //     $scope.events.push({
-        //         // id: $scope.eventDate.toLocaleDateString() + "- 0" + $scope.count,
-        //         eid: count,
-        //         eName: $scope.eventName,
-        //
-        //         eDay: $scope.eventDate.getUTCDate() + 3,
-        //         eMonth: $scope.eventDate.getUTCMonth() + 1,
-        //         eYear: $scope.eventDate.getUTCFullYear(),
-        //
-        //         eDate: $scope.eventDate.toLocaleDateString(),
-        //
-        //         eTime: $scope.eventTime.toLocaleTimeString(),
-        //         eVenue: $scope.eventVenue,
-        //         complete: false,
-        //     });
-        //
-        //
-        //     $scope.showEventsSelectedDay = false;
-        //     $scope.showCalender = true;
-        //
-        // }
-
     };
-
 
     $scope.saveChanges = () => {
 
         $scope.testt = oldItem_eid;
-        // $scope.testaa = x+1;
 
         $scope.newItem = {
             eName: $scope.eventName,
@@ -347,26 +407,8 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         $scope.eventTime = "";
         $scope.eventVenue = "";
 
-        // $scope.select_day_events.splice(x, 1,$scope.newItem);
-
-        //
-        // for ($scope.Item of $scope.events) {
-        //
-        //     if($scope.Item.eid === x-1){
-        //
-        //
-        //         $scope.events.splice(x,1,$scope.newItem );
-        //
-        //
-        //         // $scope.events.push($scope.newItem);
-        //
-        //     }
-        //
-        // }
-
 
     };
-
 
     $scope.showMe = false;
     $scope.myFunc = function () {
@@ -380,18 +422,29 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         $scope.showTable2 = !$scope.showTable2;
     };
 
-
     $scope.showCalender = true;
+    $scope.showTable3=false;
     $scope.hideCalender = function () {
         // $scope.showMe =!$scope.showMe;
         $scope.showCalender = !$scope.showCalender;
+        $scope.showTable3 = !$scope.showTable3;
 
     };
 
-    $scope.showEventsSelectedDay = false;
+    $scope.showDeveloperData=false;
+    $scope.showDev = function () {
+        $scope.showDeveloperData = !$scope.showDeveloperData;
+        $scope.showTable2 = false;
+        $scope.showMe = false;
+    };
 
+    $scope.showEventsSelectedDay = false;
+    $scope.showSelectedDayEvents = function () {
+        $scope.showEventsSelectedDay =false;
+    };
 
 }]);
+
 
 
 
