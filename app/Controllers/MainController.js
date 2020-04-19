@@ -24,28 +24,20 @@ let controller = app.controller('MainController', ['$scope', $scope => {
     let month_count_global = 3;//default current month is set to April
     let month_corrector_global = $scope.months2020[3].start; //April month day1 correcter is set as default
 
-    // $scope.currentMonth = $scope.months2020[month_count_global].month;
-
     //works for any month :) with the given parameters
     $scope.currentMonthRender = (monthCount,monthCorrecter,y) => {
         // month_count = 3;
 
         $scope.currentMonth = $scope.months2020[monthCount].month;
-
-
         $scope.thisMonth_realMonth=$scope.months2020[monthCount].month;
         $scope.thisMonth_realMonthCorrector=monthCorrecter;
-
 
         month_count_global = monthCount;
         month_corrector_global = monthCorrecter;
 
-        // $scope.thismonth_has_event=y;
-
         $scope.fullMonthDisplay = [];
         $scope.currentMonth_Days = $scope.months2020[monthCount].days;
         for (let x = 1; x <= $scope.currentMonth_Days; x++) {
-
             if(x===y){
                 $scope.fullMonthDisplay.push({
                     id: x,
@@ -60,9 +52,7 @@ let controller = app.controller('MainController', ['$scope', $scope => {
             }
         }
 
-
         $scope.monthCorrecter = [];
-
         let correctorString = "";
         for (let x = 1; x <= month_corrector_global; x++) {
             for (let x = 1; x <= month_corrector_global; x++) {
@@ -70,52 +60,13 @@ let controller = app.controller('MainController', ['$scope', $scope => {
             }
             $scope.monthCorrecter.push(correctorString);
         }
-
     }
 
     //Settings for current month displayed (default)
     $scope.thisMonthApril = () => {
 
         $scope.currentMonth = $scope.months2020[3].month;//display month name on top
-
         $scope.currentMonthRender(3,2,100); //y=100 to confirm there is no events at the begining :)
-
-        // $scope.prevmonth_has_event=y;
-        //         //
-        //         // if (month_count > 0) {
-        //         //     $scope.fullMonthDisplay = [];
-        //         //     $scope.currentMonth = $scope.months2020[month_count -= 1].month;
-        //         //     $scope.currentMonth_Days = $scope.months2020[month_count].days;
-        //         //     $scope.monthCorrecterNo = $scope.months2020[month_count].start;
-        //         //
-        //         //     for (let x = 1; x <= $scope.currentMonth_Days; x++) {
-        //         //         if(x===y){
-        //         //             $scope.fullMonthDisplay.push({
-        //         //                 id: x,
-        //         //                 hasEvents: "New Event",
-        //         //             });
-        //         //
-        //         //         }
-        //         //         else {
-        //         //             $scope.fullMonthDisplay.push({
-        //         //                 id: x,
-        //         //                 hasEvents: " ",
-        //         //             });
-        //         //         }
-        //         //     }
-        //         //
-        //         //
-        //         //     $scope.monthCorrecter = [];
-        //         //     let correctorString = "";
-        //         //     for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
-        //         //         for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
-        //         //             correctorString += (" ");
-        //         //         }
-        //         //         $scope.monthCorrecter.push(correctorString);
-        //         //     }
-        //         //
-        //         //
-        //         // }
     };
 
     $scope.thisMonthApril(); //default display April month function fired :) Any time you visit.you see this month.
@@ -123,96 +74,17 @@ let controller = app.controller('MainController', ['$scope', $scope => {
     //Previous Month calender Settings update
     $scope.prevMonth = () => {
 
-
         month_corrector_global = $scope.months2020[month_count_global-1].start;
-
         $scope.currentMonth = $scope.months2020[month_count_global-1].month;
-
         $scope.currentMonthRender(month_count_global-=1,month_corrector_global,100);
-
-        // $scope.prevmonth_has_event=y;
-        //         //
-        //         // if (month_count > 0) {
-        //         //     $scope.fullMonthDisplay = [];
-        //         //     $scope.currentMonth = $scope.months2020[month_count -= 1].month;
-        //         //     $scope.currentMonth_Days = $scope.months2020[month_count].days;
-        //         //     $scope.monthCorrecterNo = $scope.months2020[month_count].start;
-        //         //
-        //         //     for (let x = 1; x <= $scope.currentMonth_Days; x++) {
-        //         //         if(x===y){
-        //         //             $scope.fullMonthDisplay.push({
-        //         //                 id: x,
-        //         //                 hasEvents: "New Event",
-        //         //             });
-        //         //
-        //         //         }
-        //         //         else {
-        //         //             $scope.fullMonthDisplay.push({
-        //         //                 id: x,
-        //         //                 hasEvents: " ",
-        //         //             });
-        //         //         }
-        //         //     }
-        //         //
-        //         //
-        //         //     $scope.monthCorrecter = [];
-        //         //     let correctorString = "";
-        //         //     for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
-        //         //         for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
-        //         //             correctorString += (" ");
-        //         //         }
-        //         //         $scope.monthCorrecter.push(correctorString);
-        //         //     }
-        //         //
-        //         //
-        //         // }
     };
 
     //Next Month calender Settings update
     $scope.nextMonth = () => {
 
         month_corrector_global = $scope.months2020[month_count_global+1].start;
-
         $scope.currentMonth = $scope.months2020[month_count_global+1].month;
-
         $scope.currentMonthRender(month_count_global+=1,month_corrector_global,100);
-
-        // $scope.nextmonth_has_event=y;
-        //
-        // if (month_count < 11) {
-        //     $scope.fullMonthDisplay = [];
-        //     $scope.currentMonth = $scope.months2020[month_count += 1].month;
-        //     $scope.currentMonth_Days = $scope.months2020[month_count].days;
-        //     $scope.monthCorrecterNo = $scope.months2020[month_count].start;
-        //
-        //     for (let x = 1; x <= $scope.currentMonth_Days; x++) {
-        //         if(x===y){
-        //             $scope.fullMonthDisplay.push({
-        //                 id: x,
-        //                 hasEvents: "New Event",
-        //             });
-        //
-        //         }
-        //         else {
-        //             $scope.fullMonthDisplay.push({
-        //                 id: x,
-        //                 hasEvents: " ",
-        //             });
-        //         }
-        //     }
-        //
-        //
-        //     $scope.monthCorrecter = [];
-        //     let correctorString = "";
-        //     for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
-        //         for (let x = 1; x <= $scope.monthCorrecterNo; x++) {
-        //             correctorString += (" ");
-        //         }
-        //         $scope.monthCorrecter.push(correctorString);
-        //     }
-        //
-        //
-        // }
     };
 
     //Add new Event Function
@@ -221,7 +93,6 @@ let controller = app.controller('MainController', ['$scope', $scope => {
     $scope.addItem = () => {
 
         $scope.thisMonthApril();
-
         if ($scope.eventName && $scope.eventDate && $scope.eventTime && $scope.eventVenue !== "") {
             count += 1;
             $scope.newItem = {
@@ -239,7 +110,6 @@ let controller = app.controller('MainController', ['$scope', $scope => {
                 complete: false,
             };
             $scope.events.push($scope.newItem);
-
 
             if($scope.eventDate.getMonth()===3){
                 $scope.thisMonth_realMonth="This month is april.Month rendering caused error."
