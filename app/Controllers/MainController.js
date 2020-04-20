@@ -5,7 +5,7 @@
  * Email:damishs88@gmail.com
  */
 
-let controller = app.controller('MainController', ['$scope', $scope => {
+app. controller('MainController', function ($scope, $interval, $window) {
 
     /*
     * This events array is used to save incoming events.
@@ -76,7 +76,7 @@ let controller = app.controller('MainController', ['$scope', $scope => {
             }
             $scope.monthCorrecter.push(correctorString);
         }
-    }
+    };
 
     //Settings for current month displayed (default)
     $scope.thisMonthApril = () => {
@@ -126,6 +126,9 @@ let controller = app.controller('MainController', ['$scope', $scope => {
                 eMonth: $scope.eventDate.getUTCMonth() + 1,
                 eYear: $scope.eventDate.getUTCFullYear(),
                 eDate: $scope.eventDate.toLocaleDateString(),
+                eHours:$scope.eventTime.getUTCHours(),
+                eMinutes:$scope.eventTime.getUTCMinutes(),
+                eSeconds:$scope.eventTime.getUTCSeconds(),
                 eventDateFull: $scope.eventDate,
                 eventTimeFull: $scope.eventTime,
                 eTime: $scope.eventTime.toLocaleTimeString(),
@@ -135,13 +138,13 @@ let controller = app.controller('MainController', ['$scope', $scope => {
             $scope.events.push($scope.newItem);
 
             if ($scope.eventDate.getMonth() === 3) {
-                $scope.thisMonth_realMonth = "This month is april.Month rendering caused error."
+                $scope.thisMonth_realMonth = "This month is april.Month rendering caused error.";
                 $scope.thisMonthApril();
                 $scope.fullMonthDisplay [$scope.newItem.eDay - 3].hasEvents = "New Event";
             }
 
             if ($scope.eventDate.getMonth() > 3) {
-                $scope.thisMonth_realMonth = "This month is after april.Month rendering caused error."
+                $scope.thisMonth_realMonth = "This month is after april.Month rendering caused error.";
                 for (let month_count = 3; month_count < $scope.eventDate.getMonth(); month_count++) {
                     $scope.nextMonth();
                     $scope.fullMonthDisplay [$scope.newItem.eDay - 3].hasEvents = "New Event";
@@ -151,7 +154,7 @@ let controller = app.controller('MainController', ['$scope', $scope => {
 
             if ($scope.eventDate.getMonth() < 3) {
 
-                $scope.thisMonth_realMonth = "This month is before april.Month rendering caused error."
+                $scope.thisMonth_realMonth = "This month is before april.Month rendering caused error.";
 
                 let prevMonthNo = $scope.eventDate.getMonth();
                 for (prevMonthNo; prevMonthNo < (month_count_global+1); prevMonthNo++) {
@@ -170,6 +173,12 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         $scope.eventDate = "";
         $scope.eventTime = "";
         $scope.eventVenue = "";
+
+
+
+        $scope.findEventToExpire();
+
+
 
     };
 
@@ -244,6 +253,8 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         $scope.events.splice(x, 1);
 
         $scope.currentMonthRender(month_count_global, month_corrector_global, 100);
+
+        $scope.showEventNameLatestExpire = false;
     };
 
     $scope.btnAddItem = true;
@@ -321,6 +332,10 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         $scope.eventTime = "";
         $scope.eventVenue = "";
 
+        $scope.showEventNameLatestExpire = false;
+
+
+
 
     };
 
@@ -361,11 +376,87 @@ let controller = app.controller('MainController', ['$scope', $scope => {
         $scope.showEventsSelectedDay = false;
     };
 
-}]);
+    $scope.showEventNameLatestExpire = false;
+    $scope.showEventNameLatestExpireFun = function () {
+        $scope.showEventNameLatestExpire =  !$scope.showEventNameLatestExpire;
+    };
+
+    /*
+     * This method is used to find the latest event to expire and countdown.
+     */
+    $scope.findEventToExpire = () => {
+
+        $scope.dateExpire_ofDay1 = new Date(
+            2020,
+            $scope.events[0].eMonth-1,
+            $scope.events[0].eDay-1,
+            $scope.events[0].eHours-18,
+            $scope.events[0].eMinutes-30,
+            $scope.events[0].eSeconds-0,
+            0
+        );
+
+
+        for ($scope.currentEvent of $scope.events){
+
+            $scope.dateExpire = new Date(
+                2020,
+                $scope.currentEvent.eMonth-1,
+                $scope.currentEvent.eDay-1,
+                $scope.currentEvent.eHours-18,
+                $scope.currentEvent.eMinutes-30,
+                $scope.currentEvent.eSeconds-0,
+                0
+            );
+
+            if ($scope.dateExpire <= $scope.dateExpire_ofDay1) {
+
+                $scope.dateExpire_ofDay1 = $scope.dateExpire;
+
+                $interval(function () {
+
+                    let expireDate = Math.floor($scope.dateExpire_ofDay1 / 1000);
+                    let nTime = Math.floor(Date.now() / 1000);
+                    let remaining = expireDate - nTime;
+                    $scope.rDays = parseInt(remaining / 60 / 60 / 24);
+                    $scope.rHours = parseInt((remaining - ($scope.rDays * 60 * 60 * 24)) / 60 / 60);
+                    $scope.rMinutes = parseInt((remaining - ($scope.rDays * 60 * 60 * 24) - ($scope.rHours * 60 * 60)) / 60);
+                    $scope.rSeconds = parseInt(remaining - ($scope.rDays * 60 * 60 * 24) - ($scope.rHours * 60 * 60) - ($scope.rMinutes * 60));
+
+                    $scope.remaining_Statement = "Next Event will Auto Expire in,";
+                    $scope.rRemaining =  $scope.rDays + " Days " + $scope.rHours + " Hours " + $scope.rMinutes + " Minutes " + $scope.rSeconds + " Seconds ";
+
+
+                    if(remaining===0){
+
+                        $scope.showEventsSelectedDay = false;
+
+                        $scope.events.splice($scope.currentEvent.eid, 1);
+
+                        $scope.currentMonthRender(month_count_global, month_corrector_global, 100);
+
+                        $scope.showEventNameLatestExpire = false;
+
+                    }
+
+
+                }, 1000);
+
+
+                $scope.eventNameLatestExpire =  "Remind me about " + $scope.currentEvent.eName + " " +
+                "on " + $scope.currentEvent.eDate + " " +
+                "at " + $scope.currentEvent.eTime + " " +
+                "at " + $scope.currentEvent.eVenue + "." ;
+
+                $scope.showEventNameLatestExpire = true;
 
 
 
 
+            }
 
+        }
 
+    }
 
+});

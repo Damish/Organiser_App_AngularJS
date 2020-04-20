@@ -80,7 +80,7 @@
 
     <meta charset="utf-8">
     <title>Online Organizer</title>
-     <!--Latest compiled and minified CSS -->
+    <!--Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -98,6 +98,19 @@
     <div class="col">Events Availability: <h3 ng-bind="eventsAvailable"></h3></div>
     <div class="col">Select Day: <h3 ng-bind="testDay1"></h3></div>
 </div>
+
+<div class="row justify-content-center text-white p-2" style="background-color: #995d65" ng-show="showEventNameLatestExpire">
+    <h4>{{remaining_Statement}}</h4>
+</div>
+
+<div class="row justify-content-center text-white p-2" style="background-color: #995d65" ng-show="showEventNameLatestExpire">
+    <h3>{{rRemaining}}</h3>
+</div>
+
+<div class="row justify-content-center text-white p-2" style="background-color: #999999" ng-show="showEventNameLatestExpire">
+    <h2>{{eventNameLatestExpire}}</h2>
+</div>
+
 
 <div class="text-center text-white">
     <h1 class="mt-0 mb-3">Online Organizer</h1>
@@ -194,11 +207,15 @@
                 <button class="btn btn-primary m-2" ng-click="showTable()">Show/Hide All Events</button>
             </div>
             <div class="row justify-content-end">
-                <button class="btn btn-dark m-2" ng-click="hideCalender()">Show/Hide Calender</button>
+                <button class="btn btn-dark m-2" ng-click="hideCalender()">Change View Table/Calender</button>
             </div>
             <div class="row justify-content-end">
                 <button class="btn btn-light mt-2 mr-2 ml-2" ng-click="showDev()">Developer Data/Hide</button>
             </div>
+            <div class="row justify-content-end">
+                <button class="btn btn-light mt-2 mr-2 ml-2" ng-click=" showEventNameLatestExpireFun()">Next Event/Hide</button>
+            </div>
+
 
 
             <div class="row justify-content-end">
@@ -209,7 +226,7 @@
                            placeholder="Remind me about . ." value=" " required>
                     <label>Event date:</label>
                     <input type="date" id="eDate" class="form-control form-control-lg mb-3" ng-model="eventDate"
-                           value=" "
+                           value=" " min="2020-04-20" max="2020-12-31"
                            required>
                     <label>Event time:(hh:mm:AM/PM) </label>
                     <input type="time" id="eTime" class="form-control form-control-lg mb-3" ng-model="eventTime"
